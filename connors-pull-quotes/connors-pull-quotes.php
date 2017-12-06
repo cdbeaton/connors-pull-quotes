@@ -25,18 +25,17 @@ defined('ABSPATH') or die("Unauthorised access - shutting down.");
 
 function pullquotes_init()
 {
-	wp_register_style('new_style', plugins_url('/css/pullquotes.css', __FILE__), false, '1.0.0', 'all');
+	wp_register_style('pullquotes-style', plugins_url().'/connors-pull-quotes/css/pullquotes.css', false, '1.0.0', 'all');
 	
 	function show_pullquote($atts = [], $content = null)
 	{
 		$align = null;
 		switch($atts['align']){
-			case 'right': $align = 'rightquote';
-			case 'centre': $align = 'centrequote';
-			case 'left': $align = 'leftquote';
-			default: $align = 'centrequote';
+			case 'right': $align = 'rightquote'; break;
+			case 'left': $align = 'leftquote'; break;
+			default: $align = 'centrequote'; break;
 		}
-		$content = '<div class="'.$align.'">'.$content;
+		$content = '<div class="quotecontainer '.$align.'"><div class="pullquote"><p>'.$content.'</p></div>';
 		if($atts['author']!=''){ $content .= '<div class="quoteauthor">'.$atts['author'].'</div>'; }
 		$content .= '</div>';
 		return $content;
@@ -44,6 +43,9 @@ function pullquotes_init()
 	add_shortcode('pullquote', 'show_pullquote');
 }
 
+function enqueue_style(){ wp_enqueue_style('pullquotes-style'); }
+
+add_action('wp_enqueue_scripts', 'enqueue_style');
 add_action('init', 'pullquotes_init');
 
 ?>

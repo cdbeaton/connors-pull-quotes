@@ -1,27 +1,22 @@
-.rightquote {
-	max-width: 30%;
-	float: right;
-	font-weight: bold;
-	text-align: center;
-	font-size: 1.2em;
+.quotecontainer{
+	text-align:center;
+	padding:20px 30px;
 }
 
-.centrequote {
-	font-weight: bold;
-	text-align: center;
-	font-size: 1.2em;
+.pullquote{
+	font:italic 110%/130% "Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:1.2em;
 }
 
-.leftquote {
-	max-width: 30%;
-	float: left;
-	font-weight: bold;
-	text-align: center;
-	font-size: 1.2em;
-}
+.pullquote p{ margin-bottom:10px; }
 
-.quoteauthor {
-	text-transform: uppercase;
-	font-family: sans-serif;
-	font-size: 0.8em;
+.rightquote, .leftquote{ max-width:30%; }
+.rightquote{ float:right; }
+.leftquote{ float:left; }
+
+.quoteauthor{
+	text-transform:uppercase;
+	font-family:sans-serif;
+	font-size:0.8em;
 }
