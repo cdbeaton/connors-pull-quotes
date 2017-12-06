@@ -1,0 +1,27 @@
+.rightquote {
+	max-width: 30%;
+	float: right;
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.centrequote {
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.leftquote {
+	max-width: 30%;
+	float: left;
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.quoteauthor {
+	text-transform: uppercase;
+	font-family: sans-serif;
+	font-size: 0.8em;
+}
