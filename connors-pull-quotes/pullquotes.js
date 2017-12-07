@@ -1,20 +1,40 @@
 (function() {
 	tinymce.PluginManager.add('pullquotes', function( editor, url ) {
 		editor.addButton('pullquotes', {
-			title: 'Insert Pull Quote',
-			cmd: 'pullquotes',
 			image: url + '/icon.png',
+			tooltip: 'Insert Pull Quote',
+			onclick: function(){
+				var text = editor.selection.getContent({ 'format': 'html' });
+				if ( text.length === 0 ) { alert( 'Please highlight some text.' ); return; }
+				
+				editor.windowManager.open({
+					title: 'Insert Pull Quote',
+					body: [{
+						type: 'container',
+						label: 'Align',
+						layout: 'flow',
+						items: [
+							{type: 'listbox', name: 'align', values: [
+									{ text: 'Centre', value: 'centre' },
+									{ text: 'Right', value: 'right' },
+									{ text: 'Left', value: 'left' }
+								]
+							}
+						]
+					},
+					{
+						type: 'container',
+						label: 'Attribution (optional)',
+						layout: 'flow',
+						items: [
+							{type: 'textbox', name: 'author', label: 'textbox', value: ''},
+						]
+					}],
+					onsubmit: function(e){
+						editor.execCommand('mceReplaceContent', false, '[pullquote' + (e.data.author !== '' ?  ' author=\'' + e.data.author + '\'' : '') + ' align=\'' + e.data.align + '\'' + ']' + text + '[/pullquote]');
+					}
+				},);
+			}
 		}); 
-		
-		editor.addCommand('pullquotes', function() {
-			var text = editor.selection.getContent({ 'format': 'html' });
-			if ( text.length === 0 ) { alert( 'Please select some text to link.' ); return; }
-			
-			var result = prompt('Author name');
-			if ( !result ) { return; }
-			if (result.length === 0) { return; }
-		 
-			editor.execCommand('mceReplaceContent', false, '[pullquote author=\'' + result + '\']' + text + '[/pullquote]');
-		});
 	});
 })();
