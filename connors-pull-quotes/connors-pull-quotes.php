@@ -25,7 +25,7 @@ defined('ABSPATH') or die("Unauthorised access - shutting down.");
 
 function pullquotes_init()
 {
-	wp_register_style('pullquotes-style', plugins_url().'/connors-pull-quotes/css/pullquotes.css', false, '1.0.0', 'all');
+	wp_register_style('pullquotes-style', plugins_url().'/connors-pull-quotes/pullquotes.css', false, '1.0.0', 'all');
 	
 	function show_pullquote($atts = [], $content = null)
 	{
@@ -45,7 +45,27 @@ function pullquotes_init()
 
 function enqueue_style(){ wp_enqueue_style('pullquotes-style'); }
 
-add_action('wp_enqueue_scripts', 'enqueue_style');
+function pullquotes_admin_init()
+{
+	function add_tinymce_plugin($plugin_array){
+		$plugin_array['pullquotes'] = plugins_url().'/connors-pull-quotes/pullquotes.js';
+		return $plugin_array;
+	}
+	
+	function add_tinymce_toolbar_button($buttons){
+		array_push($buttons, '|', 'pullquotes');
+		return $buttons;
+	}
+	
+	if(!current_user_can('edit_posts') && !current_user_can('edit_pages')){ return; }
+	if(get_user_option('rich_editing')!='true'){ return; }
+
+	add_filter('mce_external_plugins', 'add_tinymce_plugin');
+	add_filter('mce_buttons', 'add_tinymce_toolbar_button');
+}
+
 add_action('init', 'pullquotes_init');
+add_action('wp_enqueue_scripts', 'enqueue_style');
+if(is_admin()){ add_action('init', 'pullquotes_admin_init'); }
 
 ?>
