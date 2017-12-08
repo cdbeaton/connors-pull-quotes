@@ -24,7 +24,7 @@
 					},
 					{
 						type: 'container',
-						label: 'Attribution (optional)',
+						label: 'Author (optional)',
 						layout: 'flow',
 						items: [
 							{type: 'textbox', name: 'author', label: 'textbox', value: ''},
